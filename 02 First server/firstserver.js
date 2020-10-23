@@ -5,6 +5,10 @@ function monTraitement1(req,res){
     console.log("hello world V1 : "+counter)
     counter=counter+1
     res.end()
+    // perdre du temps pour bloquer le serveur nodeJs et prouver que c'est un monothread
+    for(let j=0;j<20000;j=j+1){
+        console.log("j="+j)
+    }
 }
 function monTraitement2(req,res){
     res.write("hello world V2 : "+counter)
