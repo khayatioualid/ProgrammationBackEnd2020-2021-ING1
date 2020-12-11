@@ -1,0 +1,15 @@
+{
+  "name": "12_security_jwt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webserviceRest_JWT.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "njwt": "^1.0.0"
+  }
+}
