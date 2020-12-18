@@ -1,7 +1,7 @@
 function init(collectionName,urlServer,schemaParam)
 {
     const mongoose=require("mongoose")
-    mongoose.connect(urlServer, {useNewUrlParser: true});  
+    mongoose.connect(urlServer, {useNewUrlParser: true,useUnifiedTopology: true,useFindAndModify: false});    
     const db = mongoose.connection;
     db.on('error', function(){
         console.log("connection non réussie...")
@@ -36,10 +36,37 @@ function init(collectionName,urlServer,schemaParam)
     // webservice d'update d'un document
 
     // webservice de recherche d'un document par id
+    router.put('/:id', async function (req, res) {
+        let id=req.params.id
+        const filter = { id: id };
+        const updateObject = req.body;
+        console.log(id)
+        console.log(updateObject)
+        await model.findOneAndUpdate(filter, updateObject);
+    })
 
+    router.get('/', function (req, res) {
+        model.find(function(err,response){
+            if(err){
+                res.send("erreur dans getAll")
+            }else{
+                res.send(response)
+            }
+        });
+    })
     // webservice de suppression d'un document selon un id
 
     // recuperer tous les document d'une collection
+    router.get('/:id', function (req, res) {
+        //res.send(`id = ${req.params.id} collection`)
+        model.find({_id: req.params.id},function(err,response){
+            if(err){
+                res.send("erreur dans getbyid")
+            }else{
+                res.send(response[0])
+            }
+        });
+    })
     return router
 }
 
