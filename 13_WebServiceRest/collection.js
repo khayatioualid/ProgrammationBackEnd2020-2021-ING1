@@ -38,11 +38,29 @@ function init(collectionName,urlServer,schemaParam)
     // webservice de recherche d'un document par id
     router.put('/:id', async function (req, res) {
         let id=req.params.id
-        const filter = { id: id };
+        const filter = { _id: id };
         const updateObject = req.body;
         console.log(id)
+        console.log(filter)
         console.log(updateObject)
-        await model.findOneAndUpdate(filter, updateObject);
+        /* en utilisant le callback
+        model.findOneAndUpdate(filter, updateObject, {new: true},(err,updatedObject) =>{
+            if(err){
+                return res.status(500).send(err)
+            }else{
+                return res.status(500).send(updatedObject)
+            }
+        });
+        */
+        /* version utilisant await try and catch */
+        try{
+            let updatedObject=await model.findOneAndUpdate(filter, updateObject)
+            return res.status(500).send(updatedObject)
+        }catch(err){
+            return res.status(500).send(err)
+        }
+
+        //model.findOneAndUpdate()
     })
 
     router.get('/', function (req, res) {
